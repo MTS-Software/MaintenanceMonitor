@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="./templateMenu.xhtml">
+
+	<ui:define name="content">
+
+		<h:form>
+
+			<p:outputLabel value="Wartungen: Gesamt"/>
+			<br></br>
+			<br></br>
+
+			<p:dataTable id="anlagenTable" var="anlage"
+				value="#{tableBean.anlagen}" style="font-size:12px;">
+
+				<f:facet name="header">
+           			Übersicht
+     		   </f:facet>
+
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column rowspan="1" headerText="Anlagen" />
+						<p:column colspan="8" headerText="Wartungen" />
+					</p:row>
+
+					<p:row>
+						<p:column headerText="Auftrag" />
+						<p:column headerText="Station / Komponente" />
+						<p:column headerText="durchgeführt" />
+						<p:column headerText="Info" />
+						<p:column headerText="Mitarbeiter" />
+						<p:column headerText="Zeitstempel" />
+						<p:column headerText="Bearbeiter" />
+					</p:row>
+				</p:columnGroup>
+
+				<p:subTable var="wartungen" value="#{anlage.wartungen}">
+					<f:facet name="header">
+            		  #{anlage.name} 
+           			</f:facet>
+
+					<p:column>
+               		 #{wartungen.auftragNr}
+            		</p:column>
+					<p:column>
+               		 #{wartungen.station.name}
+            		</p:column>
+					<p:column>
+               		 #{wartungen.faellig}
+            		</p:column>
+					<p:column>
+               		 #{wartungen.info}
+            		</p:column>
+					<p:column>
+               		 #{wartungen.mitarbeiter}
+            		</p:column>
+					<p:column>
+               		 #{wartungen.timestamp}
+            		</p:column>
+					<p:column>
+               		 #{wartungen.user}
+            		</p:column>
+
+				</p:subTable>
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

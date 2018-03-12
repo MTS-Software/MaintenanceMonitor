@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="./templateMenu.xhtml">
+
+	<ui:define name="content">
+		<p:dataTable var="WartungDTO" value="#{appservice.anlagenWartungen}"
+			style="font-size:12px;">
+			<p:column headerText="Anlage">
+				<h:outputText value="#{WartungDTO.anlage.name}" />
+			</p:column>
+			<p:column headerText="Auftrag">
+				<h:outputText value="#{WartungDTO.auftragNr}" />
+			</p:column>
+			<p:column headerText="durchgeführt">
+				<h:outputText value="#{WartungDTO.faellig}" />
+			</p:column>
+			<p:column headerText="Info">
+				<h:outputText value="#{WartungDTO.info}" />
+			</p:column>
+			<p:column headerText="Mitarbeiter">
+				<h:outputText value="#{WartungDTO.mitarbeiter}" />
+			</p:column>
+			<p:column headerText="Zeitstempel">
+				<h:outputText value="#{WartungDTO.timestamp}" />
+			</p:column>
+			<p:column headerText="Bearbeiter">
+				<h:outputText value="#{WartungDTO.user}" />
+			</p:column>
+
+		</p:dataTable>
+
+	</ui:define>
+
+</ui:composition>
+</html>

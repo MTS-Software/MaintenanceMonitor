@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+
+	<h1>MaintenanceManager</h1>
+
+	<h:form>
+
+		<p:dataTable var="station" value="#{stationenView.stationen}">
+			<p:column headerText="Id">
+				<h:outputText value="#{station.id}" />
+			</p:column>
+
+			<p:column headerText="Anlage">
+				<h:outputText value="#{station.name}" />
+			</p:column>
+
+			<p:column headerText="Station">
+				<h:outputText value="#{station.name}" />
+			</p:column>
+
+	<!--	
+			<p:column headerText="rückmelden">
+				<h:commandButton action="#{wartungenView.select}">
+					<f:event type="preRenderView" listener="#{wartungenView.countUp}" />
+					<f:setPropertyActionListener value="#{wartung}"
+						target="#{wartungenView.wartung}" />
+				</h:commandButton>
+			</p:column>
+-->
+			<p:column headerText="Wartung durchführen">
+				<p:commandButton action="tpmWartung?faces-redirect=true" icon="ui-icon-edit">
+					<f:event type="preRenderView" listener="#{stationenView.countUp}" />
+					<f:setPropertyActionListener value="#{station}"
+						target="#{stationenView.station}" />
+				</p:commandButton>
+			</p:column>
+
+			<!--			
+
+			<p:column headerText="Rückmelden Faces 1" style="text-align: left">
+				<h:button id="lnkHidden" value="rückmelden"
+					outcome="tpmWartung.xhtml">
+					<f:param name="id" value="#{wartung}" />
+				</h:button>
+			</p:column>
+
+
+			<p:column headerText="Rückmelden HTML" style="text-align: left">
+				<h:commandButton value="rückmelden" type="submit"
+					action="#{wartungenView.select}"></h:commandButton>
+			</p:column>
+
+
+			<p:column headerText="Rückmelden Primefaces" style="text-align: left">
+				<p:commandButton title="rückmelden">
+					<f:setPropertyActionListener value="#{wartung}"
+						target="#{wartungenView.wartung}" />
+				</p:commandButton>
+			</p:column>
+-->
+			<!--			-->
+
+		</p:dataTable>
+
+	</h:form>
+
+</h:body>
+</html>

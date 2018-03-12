@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="./templateMenu.xhtml">
+
+	<ui:define name="content">
+
+		<p:outputLabel value="Anlagen: Parameter" />
+		<br></br>
+		<br></br>
+
+		<h:form id="form">
+
+
+			<p:dataTable var="AnlageDTO" value="#{appservice.anlagen}"
+				style="font-size:12px;">
+
+				<p:column headerText="Name">
+					<h:outputText value="#{AnlageDTO.name}" />
+				</p:column>
+
+
+				<p:column headerText="Auftrag">
+					<h:outputText value="#{AnlageDTO.auftragNr}" />
+				</p:column>
+				<p:column headerText="Jahresstueckzahl">
+					<h:outputText value="#{AnlageDTO.jahresStueck}" />
+				</p:column>
+				<p:column headerText="aktuelle Stückzahl">
+					<h:outputText value="#{AnlageDTO.aktuelleStueck}" />
+				</p:column>
+				<p:column headerText="Wartungsintervall">
+					<h:outputText value="#{AnlageDTO.wartungIntervall}" />
+				</p:column>
+				<p:column headerText="Zeitstempel">
+					<h:outputText value="#{AnlageDTO.timestamp}" />
+				</p:column>
+				<p:column headerText="Bearbeiter">
+					<h:outputText value="#{AnlageDTO.user}" />
+				</p:column>
+
+
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

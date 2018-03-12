@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="resources/css/cssLayout.css" rel="stylesheet"
+		type="text/css" />
+	<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="images/favicon.ico" rel="shortcut icon"
+		type="image/vnd.microsoft.icon" />
+
+	<title>MaintenanceMonitor</title>
+</h:head>
+
+<body>
+
+	<div id="top">
+		<ui:insert name="top">
+			<h1>MaintenanceMonitor</h1>
+			<p align="right">
+				<font size="2">© 2014 by Markus Thaler</font>
+			</p>
+		</ui:insert>
+	</div>
+	
+	<div>
+		<div id="left">
+			<ui:insert name="left">
+				<h:form>
+					<p:menu style="font-size:12px;">
+						<p:menuitem action="start" value="Startseite" />
+						<p:submenu label="Anlagen">
+							<p:menuitem action="anlagen?faces-redirect=true"
+								value="Parameter" />
+							<p:menuitem
+								action="anlagenParameterWartungen?faces-redirect=true"
+								value="Parameter und Wartungen" />
+						</p:submenu>
+						<p:submenu label="Stationen">
+							<p:menuitem
+								action="stationenParameterWartungen?faces-redirect=true"
+								value="Parameter und Wartungen" />
+						</p:submenu>
+						<p:submenu label="Wartungen">
+							<p:menuitem action="wartungenGesamt?faces-redirect=true"
+								value="Gesamt" />
+							<p:menuitem action="tpmWartungen?faces-redirect=true" value="Total Productivity Management" />
+							<p:menuitem action="wartungenFilter?faces-redirect=true"
+								value="Suche" />
+						</p:submenu>
+						<p:submenu label="Sonstiges">
+							<p:menuitem action="history?faces-redirect=true" value="History" />
+							<p:menuitem action="downloads?faces-redirect=true"
+								value="Downloads" />
+						</p:submenu>
+					</p:menu>
+
+				</h:form>
+			</ui:insert>
+
+		</div>
+		<div id="content" class="left_content">
+			<ui:insert name="content">Content</ui:insert>
+		</div>
+	</div>
+
+</body>
+
+</html>

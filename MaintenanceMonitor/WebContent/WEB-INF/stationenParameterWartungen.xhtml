@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="resources/css/cssLayout.css" rel="stylesheet"
+		type="text/css" />
+	<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+</h:head>
+
+<ui:composition template="./templateMenu.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="form">
+
+			<h2>Parameter und Wartungen</h2>
+
+			<h:selectOneMenu value="#{anlagenstationenparameterwartungen.anlageName}"
+				style="width: 300px; font-size: 14px;" styleClass="myCustomStyle"
+				effect="fade">
+				<f:selectItem id="select2" itemLabel="Anlage auswählen" itemValue="" />
+				<f:selectItems value="#{anlagenstationenparameterwartungen.anlagen}" />
+			</h:selectOneMenu>
+			&nbsp;
+			<h:selectOneMenu value="#{anlagenstationenparameterwartungen.yearName}"
+				style="width: 300px; font-size: 14px;" styleClass="myCustomStyle"
+				effect="fade">
+				<f:selectItem id="select1" itemLabel="Jahr" itemValue="" />
+				<f:selectItems value="#{anlagenstationenparameterwartungen.years}" />
+			</h:selectOneMenu>
+			&nbsp;
+
+			<h:commandButton value="ausführen"
+				actionListener="#{anlagenstationenparameterwartungen.ausfuehrenAnlagenParameterWartungen}"
+				style="font-size:14px;" styleClass="myCustomStyle"
+				update="tbl tbl2 tbl3" />
+			<br></br>
+			
+			
+
+			<h3>Anlagenparameter</h3>
+
+			<p:dataTable id="tbl" var="anlage" headerText="Anlage"
+				value="#{anlagenstationenparameterwartungen.anlage}"
+				emptyMessage="Keine Daten vorhanden" style="font-size:12px;">
+
+				<p:column headerText="Name">
+					<h:outputText value="#{anlage.name}" />
+				</p:column>
+				<p:column headerText="Auftrag">
+					<h:outputText value="#{anlage.auftragNr}" />
+				</p:column>
+				<p:column headerText="Jahresstueckzahl">
+					<h:outputText value="#{anlage.jahresStueck}" />
+				</p:column>
+				<p:column headerText="aktuelle Stückzahl">
+					<h:outputText value="#{anlage.aktuelleStueck}" />
+				</p:column>
+				<p:column headerText="Wartungsintervall">
+					<h:outputText value="#{anlage.wartungIntervall}" />
+				</p:column>
+				<p:column headerText="letzte Wartung bei Stück">
+					<h:outputText value="#{anlage.lastWartungStueckzahl}" />
+				</p:column>
+				<p:column headerText="Zeitstempel">
+					<h:outputText value="#{anlage.timestamp}" />
+				</p:column>
+				<p:column headerText="Bearbeiter">
+					<h:outputText value="#{anlage.user}" />
+				</p:column>
+
+
+
+			</p:dataTable>
+
+
+			<h3>Stations/Komponentenparameter</h3>
+
+
+			<p:dataTable id="tbl3" var="station" headerText="Station/Komponente"
+				value="#{anlagenstationenparameterwartungen.stationen}"
+				emptyMessage="Keine Daten vorhanden" style="font-size:12px;">
+
+				<p:column headerText="Name">
+					<h:outputText value="#{station.name}" />
+				</p:column>
+				<p:column headerText="Auftrag">
+					<h:outputText value="#{station.auftragNr}" />
+				</p:column>
+				<p:column headerText="Wartungsintervall">
+					<h:outputText value="#{station.wartungIntervall}" />
+				</p:column>
+				<p:column headerText="letzte Wartung bei Stück">
+					<h:outputText value="#{station.lastWartungStueckzahl}" />
+				</p:column>
+				<p:column headerText="Zeitstempel">
+					<h:outputText value="#{station.timestamp}" />
+				</p:column>
+				<p:column headerText="Bearbeiter">
+					<h:outputText value="#{station.user}" />
+				</p:column>
+
+
+
+			</p:dataTable>
+
+
+			<h3>Wartungen</h3>
+			<p:commandButton value="Print" type="button" icon="ui-icon-print"
+				style="display:block;margin-bottom: 16px">
+				<p:printer target="tbl2" />
+			</p:commandButton>
+
+			<p:dataTable id="tbl2" var="wartung"
+				value="#{anlagenstationenparameterwartungen.wartungen}"
+				emptyMessage="Keine Daten vorhanden" style="font-size:12px;">
+
+				<p:column headerText="Anlage/Station/Komponente">
+					<h:outputText value="#{wartung.station.name}" />
+				</p:column>
+				<p:column headerText="Auftrag">
+					<h:outputText value="#{wartung.auftragNr}" />
+				</p:column>
+				<p:column headerText="durchgeführt">
+					<h:outputText value="#{wartung.abgeschlossen}" />
+				</p:column>
+				<p:column headerText="abgeschlossen bei">
+					<h:outputText value="#{wartung.prozent}%" />
+				</p:column>
+				<p:column headerText="Info">
+					<h:outputText value="#{wartung.info}" />
+				</p:column>
+				<p:column headerText="Mitarbeiter">
+					<h:outputText value="#{wartung.mitarbeiter}" />
+				</p:column>
+				<p:column headerText="Zeitstempel">
+					<h:outputText value="#{wartung.timestamp}" />
+				</p:column>
+				<p:column headerText="Bearbeiter">
+					<h:outputText value="#{wartung.user}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>
