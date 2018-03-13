@@ -78,7 +78,7 @@ public class StationJDBCDAO implements StationDAO {
 				station.setWartungWarnung(rs.getInt("wartungStueckWarnung"));
 				station.setWartungFehler(rs.getInt("wartungStueckFehler"));
 				station.setAuswertung(rs.getBoolean("auswertung"));
-			
+
 				station.setStatus(rs.getBoolean("status"));
 				station.setTimestamp(rs.getTimestamp("timestamp"));
 				station.setUser(rs.getString("user"));
@@ -122,7 +122,8 @@ public class StationJDBCDAO implements StationDAO {
 			station.setWartungWarnung(rs.getInt("wartungStueckWarnung"));
 			station.setWartungFehler(rs.getInt("wartungStueckFehler"));
 			station.setAuswertung(rs.getBoolean("auswertung"));
-			
+			station.setTpm(rs.getBoolean("tpm"));
+
 			station.setStatus(rs.getBoolean("status"));
 			station.setMailSent(rs.getBoolean("mailSent"));
 			station.setTimestamp(rs.getTimestamp("timestamp"));
@@ -200,7 +201,7 @@ public class StationJDBCDAO implements StationDAO {
 			ps.setTimestamp(8, station.getTimestamp());
 			ps.setString(9, System.getProperty("user.name"));
 			// ps.setInt(10, station.getLastWartungId());
-			ps.setBoolean(10, station.getStatus());
+			ps.setBoolean(10, station.isStatus());
 			ps.setInt(11, station.getAnlageId());
 			ps.setInt(12, station.getPanelFormatId());
 
@@ -221,7 +222,8 @@ public class StationJDBCDAO implements StationDAO {
 		Integer lastId = null;
 
 		try {
-			PreparedStatement ps = ConnectionManager.getInstance().getConnection().prepareStatement("select last_insert_id()");
+			PreparedStatement ps = ConnectionManager.getInstance().getConnection()
+					.prepareStatement("select last_insert_id()");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				lastId = rs.getInt(1);
@@ -252,15 +254,16 @@ public class StationJDBCDAO implements StationDAO {
 				ps.setInt(5, station.getWartungWarnung());
 				ps.setInt(6, station.getWartungFehler());
 				ps.setBoolean(7, station.isAuswertung());
-			
+
 				ps.setTimestamp(9, timestamp);
 				ps.setString(10, System.getProperty("user.name"));
-				ps.setBoolean(11, station.getStatus());
+				ps.setBoolean(11, station.isStatus());
 				ps.setInt(12, station.getId());
 
 				ps.executeUpdate();
 
-				// Zeitstempel soll erst beschrieben werden, wenn der Befehl erfolgreich ausgeführt wurde
+				// Zeitstempel soll erst beschrieben werden, wenn der Befehl erfolgreich
+				// ausgeführt wurde
 				station.setTimestamp(timestamp);
 
 			} else
@@ -274,9 +277,10 @@ public class StationJDBCDAO implements StationDAO {
 	@Override
 	public void updateStationStatus(StationDTO station) throws DAOException {
 		try {
-			PreparedStatement ps = ConnectionManager.getInstance().getConnection().prepareStatement(UPDATE_STATIONSTATUS);
+			PreparedStatement ps = ConnectionManager.getInstance().getConnection()
+					.prepareStatement(UPDATE_STATIONSTATUS);
 
-			ps.setBoolean(1, station.getStatus());
+			ps.setBoolean(1, station.isStatus());
 			ps.setInt(2, station.getId());
 
 			ps.executeUpdate();
@@ -312,11 +316,27 @@ public class StationJDBCDAO implements StationDAO {
 				station.setWartungFehler(rs.getInt("wartungStueckFehler"));
 				station.setAuswertung(rs.getBoolean("auswertung"));
 				station.setStatus(rs.getBoolean("status"));
+				station.setTpm(rs.getBoolean("tpm"));
 				station.setMailSent(rs.getBoolean("mailSent"));
 				station.setTimestamp(rs.getTimestamp("timestamp"));
 				station.setUser(rs.getString("user"));
 				station.setPanelFormatId(rs.getInt("panelFormatId"));
 				station.setAnlageId(rs.getInt("anlageId"));
+
+				station.setWartungArt(rs.getInt("wartungArt"));
+				station.setWartungStueckIntervall(rs.getInt("wartungStueckIntervall"));
+
+				station.setWartungDateIntervall(rs.getInt("wartungDateIntervall"));
+				station.setIntervallDateUnit(rs.getInt("intervallDateUnit"));
+				station.setCreateDate(rs.getDate("createDate"));
+				station.setWarnungDateUnit(rs.getInt("warnungDateUnit"));
+				station.setWartungDateWarnung(rs.getInt("wartungDateWarnung"));
+
+				station.setLastWartungStueckzahl(rs.getInt("lastWartungStueck"));
+				station.setLastWartungDate(rs.getDate("lastWartungDate"));
+
+				station.setLastWartungStueckzahl(rs.getInt("lastWartungStueck"));
+				station.setLastWartungDate(rs.getDate("lastWartungDate"));
 
 				anlagenList.add(station);
 			}

@@ -157,5 +157,25 @@ public class WartungDTO implements Comparable<WartungDTO> {
 		// TODO Automatisch generierter Methodenstub
 		return getAnlage().getName().compareTo(o.getAnlage().getName());
 	}
+	
+	
+	
+	public enum EWartungArt {
+
+		STUECKZAHL("Stückzahl"), TIME_INTERVALL("Zeitintervall");
+
+		private String label;
+
+		EWartungArt(String label) {
+			this.label = label;
+
+		}
+
+		@Override
+		public String toString() {
+			return label;
+		}
+
+	}
 
 }

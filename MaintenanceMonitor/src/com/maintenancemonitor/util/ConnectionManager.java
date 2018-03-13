@@ -10,7 +10,6 @@ public class ConnectionManager {
 
 	private Connection connection;
 
-	
 	public static ConnectionManager getInstance() {
 		if (instance == null)
 			instance = new ConnectionManager();
@@ -28,7 +27,7 @@ public class ConnectionManager {
 		String password;
 
 		url = "jdbc:mysql://10.176.45.4:3306/MaintenanceManager";
-		// url = "jdbc:mysql://localhost:3306/MaintenanceVisualization";
+		// url = "jdbc:mysql://localhost:3306/MaintenanceManager";
 
 		user = "root";
 		password = "root";

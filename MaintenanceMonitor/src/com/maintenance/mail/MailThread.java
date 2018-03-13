@@ -181,35 +181,36 @@ public class MailThread implements Runnable {
 
 					for (StationDTO station : anlage.getStationen()) {
 
-						if (station.getStatus()) {
+						if (station.isStatus()) {
 
 							prozent = calcProzent(station);
 
-
-//							if (station.getAktuelleWartungId() != 0 || prozent < station.getWartungWarnung()) {
-//								if (station.isMailSent()) {
-//									station.setMailSent(false);
-//									stationDAO.updateMailSent(station);
-//								}
-//							}
-//
-//							if (prozent >= station.getWartungWarnung() && station.getAktuelleWartungId() == 0) {
-//								if (!station.isMailSent()) {
-//
-//									for (AnlageUserDTO anlagenUser : getAnlagenUser(anlage.getId())) {
-//										System.out.println(station.getAnlage() + ": " + station.getName());
-//										System.out.println(anlagenUser.getBenutzer().getMail());
-//										sendEmail(anlagenUser.getBenutzer().getMail(),
-//												"MaintenanceMonitor: " + anlage.getName(),
-//												"Anlage: " + anlage.getName() + "\nStation / Komponente: "
-//														+ station.getName() + "\n" + text + prozent + "%");
-//
-//									}
-//
-//									station.setMailSent(true);
-//									stationDAO.updateMailSent(station);
-//								}
-//							}
+							// if (station.getAktuelleWartungId() != 0 || prozent <
+							// station.getWartungWarnung()) {
+							// if (station.isMailSent()) {
+							// station.setMailSent(false);
+							// stationDAO.updateMailSent(station);
+							// }
+							// }
+							//
+							// if (prozent >= station.getWartungWarnung() && station.getAktuelleWartungId()
+							// == 0) {
+							// if (!station.isMailSent()) {
+							//
+							// for (AnlageUserDTO anlagenUser : getAnlagenUser(anlage.getId())) {
+							// System.out.println(station.getAnlage() + ": " + station.getName());
+							// System.out.println(anlagenUser.getBenutzer().getMail());
+							// sendEmail(anlagenUser.getBenutzer().getMail(),
+							// "MaintenanceMonitor: " + anlage.getName(),
+							// "Anlage: " + anlage.getName() + "\nStation / Komponente: "
+							// + station.getName() + "\n" + text + prozent + "%");
+							//
+							// }
+							//
+							// station.setMailSent(true);
+							// stationDAO.updateMailSent(station);
+							// }
+							// }
 						}
 
 					}

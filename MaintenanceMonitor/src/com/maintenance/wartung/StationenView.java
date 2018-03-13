@@ -1,11 +1,22 @@
 package com.maintenance.wartung;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+
+import com.maintenance.util.ProzentCalc;
+import com.maintenancemonitor.db.dao.AnlageJDBCDAO;
+import com.maintenancemonitor.db.dao.StationJDBCDAO;
+import com.maintenancemonitor.db.dto.AnlageDTO;
+import com.maintenancemonitor.db.dto.StationDTO;
+import com.maintenancemonitor.db.dto.WartungDTO.EWartungArt;
+import com.maintenancemonitor.util.DAOException;
 
 @ManagedBean(name = "stationenView")
 @SessionScoped
@@ -13,20 +24,45 @@ public class StationenView {
 
 	private int count;
 
-	@ManagedProperty(value = "#{stationService}")
-	private StationService service;
+	private List<StationDTO> stationen;
 
 	@ManagedProperty(value = "#{station}")
-	private Station station;
+	private StationDTO station;
 
-	private List<Station> stationen;
+	public StationenView() {
 
-	@PostConstruct
-	public void init() {
+		StationJDBCDAO stationDAO = new StationJDBCDAO();
+		AnlageJDBCDAO anlageDAO = new AnlageJDBCDAO();
 
-		System.out.println("init");
+		try {
 
-		stationen = service.getStationen();
+			List<StationDTO> stationen = stationDAO.getStationen();
+
+			for (AnlageDTO anl : anlageDAO.getAnlagen()) {
+				for (StationDTO st : stationen) {
+					if (anl.getId() == st.getAnlageId()) {
+						st.setAnlage(anl);
+					}
+
+				}
+
+			}
+
+			this.stationen = new ArrayList<>();
+
+			for (StationDTO st : stationen) {
+
+				if (st.isTpm())
+					if (checkStationElapsed(st))
+						this.stationen.add(st);
+
+			}
+
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	public String select() {
@@ -37,26 +73,84 @@ public class StationenView {
 
 	}
 
-	public List<Station> getStationen() {
+	public List<StationDTO> getStationen() {
+
 		return stationen;
+
 	}
 
-	public void setService(StationService service) {
-		this.service = service;
-	}
+	public StationDTO getStation() {
 
-	public Station getStation() {
 		return station;
 	}
 
-	public void setStation(Station station) {
+	public void setStation(StationDTO station) {
+
 		this.station = station;
 	}
 
 	public void countUp() {
 
 		count++;
+
 		System.out.println(count);
+	}
+
+	private boolean checkStationElapsed(StationDTO station) {
+
+		String remark = null;
+		float prozent = 0;
+		boolean maintenanceElapsed = false;
+
+		if (station.getWartungArt() == EWartungArt.STUECKZAHL.ordinal()) {
+
+			prozent = ProzentCalc.calcProzent(station);
+
+			if (prozent >= station.getWartungStueckWarnung() && prozent < station.getWartungStueckFehler())
+				maintenanceElapsed = true;
+
+			else if (prozent >= station.getWartungStueckFehler())
+				maintenanceElapsed = true;
+		}
+
+		if (station.getWartungArt() == EWartungArt.TIME_INTERVALL.ordinal()) {
+
+			if (station.getCreateDate() != null || station.getLastWartungDate() != null) {
+
+				Date nextWarnungDate = null;
+				Date nextWartungDate;
+
+				if (station.getLastWartungDate() != null) {
+					nextWartungDate = ProzentCalc.calcNextWartungDate(station.getLastWartungDate(),
+							station.getIntervallDateUnit(), station.getWartungDateIntervall());
+					nextWarnungDate = ProzentCalc.calcNextWarnungDate(station.getWarnungDateUnit(),
+							station.getLastWartungDate(), nextWartungDate, station.getWartungDateWarnung());
+					prozent = ProzentCalc.calcProzent(station.getLastWartungDate().getTime(),
+							nextWartungDate.getTime());
+				} else {
+					nextWartungDate = ProzentCalc.calcNextWartungDate(station.getCreateDate(),
+							station.getIntervallDateUnit(), station.getWartungDateIntervall());
+					nextWarnungDate = ProzentCalc.calcNextWarnungDate(station.getWarnungDateUnit(),
+							station.getCreateDate(), nextWartungDate, station.getWartungDateWarnung());
+					prozent = ProzentCalc.calcProzent(station.getCreateDate().getTime(), nextWartungDate.getTime());
+				}
+
+				SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				remark = df.format(nextWartungDate);
+
+				if (Calendar.getInstance().getTime().after(nextWarnungDate)
+						&& Calendar.getInstance().getTime().before(nextWartungDate))
+					maintenanceElapsed = true;
+
+				if (Calendar.getInstance().getTime().after(nextWartungDate))
+					maintenanceElapsed = true;
+
+			}
+
+		}
+
+		return maintenanceElapsed;
+
 	}
 
 }

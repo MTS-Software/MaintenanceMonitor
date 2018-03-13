@@ -2,13 +2,15 @@ package com.maintenancemonitor.db.dto;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name = "station")
-@RequestScoped
+@SessionScoped
 public class StationDTO {
 
 	private int id;
@@ -21,6 +23,20 @@ public class StationDTO {
 	private int wartungFehler;
 	private boolean status;
 	private boolean mailSent;
+	private boolean tpm;
+
+	private int wartungArt;
+
+	private int wartungStueckIntervall;
+	private int wartungDateIntervall;
+	private Date lastWartungDate;
+	private Date createDate;
+	private int intervallDateUnit;
+
+	private int wartungStueckWarnung;
+	private int wartungStueckFehler;
+	private int wartungDateWarnung;
+	private int warnungDateUnit;
 
 	private int anlageId;
 	private int panelFormatId;
@@ -46,14 +62,28 @@ public class StationDTO {
 		return mailSent;
 	}
 
+	public int getIntervallDateUnit() {
+		return intervallDateUnit;
+	}
+
+	public void setIntervallDateUnit(int intervallDateUnit) {
+		this.intervallDateUnit = intervallDateUnit;
+	}
+
 	public void setMailSent(boolean mailSent) {
 		this.mailSent = mailSent;
 	}
 
-	
-
 	public AnlageDTO getAnlage() {
 		return anlage;
+	}
+
+	public int getWarnungDateUnit() {
+		return warnungDateUnit;
+	}
+
+	public void setWarnungDateUnit(int warnungDateUnit) {
+		this.warnungDateUnit = warnungDateUnit;
 	}
 
 	public int getAnlageId() {
@@ -62,6 +92,14 @@ public class StationDTO {
 
 	public String getAuftragNr() {
 		return auftragNr;
+	}
+
+	public int getWartungArt() {
+		return wartungArt;
+	}
+
+	public void setWartungArt(int wartungArt) {
+		this.wartungArt = wartungArt;
 	}
 
 	public int getId() {
@@ -82,10 +120,6 @@ public class StationDTO {
 
 	public int getPanelFormatId() {
 		return panelFormatId;
-	}
-
-	public boolean getStatus() {
-		return status;
 	}
 
 	public Timestamp getTimestamp() {
@@ -115,8 +149,6 @@ public class StationDTO {
 	public boolean isAuswertung() {
 		return auswertung;
 	}
-
-	
 
 	public void setAnlage(AnlageDTO anlage) {
 		this.anlage = anlage;
@@ -154,6 +186,10 @@ public class StationDTO {
 		this.panelFormatId = panelFormatId;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
@@ -182,9 +218,74 @@ public class StationDTO {
 		this.wartungWarnung = wartungWarnung;
 	}
 
+	public boolean isTpm() {
+		return tpm;
+	}
+
+	public void setTpm(boolean tpm) {
+		this.tpm = tpm;
+	}
+
+	public int getWartungStueckIntervall() {
+		return wartungStueckIntervall;
+	}
+
+	public void setWartungStueckIntervall(int wartungStueckIntervall) {
+		this.wartungStueckIntervall = wartungStueckIntervall;
+	}
+
+	public int getWartungDateIntervall() {
+		return wartungDateIntervall;
+	}
+
+	public void setWartungDateIntervall(int wartungDateIntervall) {
+		this.wartungDateIntervall = wartungDateIntervall;
+	}
+
+	public Date getLastWartungDate() {
+		return lastWartungDate;
+	}
+
+	public void setLastWartungDate(Date lastWartungDate) {
+		this.lastWartungDate = lastWartungDate;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public int getWartungStueckWarnung() {
+		return wartungStueckWarnung;
+	}
+
+	public void setWartungStueckWarnung(int wartungStueckWarnung) {
+		this.wartungStueckWarnung = wartungStueckWarnung;
+	}
+
+	public int getWartungStueckFehler() {
+		return wartungStueckFehler;
+	}
+
+	public void setWartungStueckFehler(int wartungStueckFehler) {
+		this.wartungStueckFehler = wartungStueckFehler;
+	}
+
+	public int getWartungDateWarnung() {
+		return wartungDateWarnung;
+	}
+
+	public void setWartungDateWarnung(int wartungDateWarnung) {
+		this.wartungDateWarnung = wartungDateWarnung;
+	}
+
 	@Override
 	public String toString() {
-		return "StationDTO [id=" + id + ", name=" + name + ", timestamp=" + timestamp + ", user=" + user + ", panelFormat=" + panelFormat + ", anlage=" + anlage + "]";
+		return "StationDTO [id=" + id + ", name=" + name + ", timestamp=" + timestamp + ", user=" + user
+				+ ", panelFormat=" + panelFormat + ", anlage=" + anlage + "]";
 	}
 
 }

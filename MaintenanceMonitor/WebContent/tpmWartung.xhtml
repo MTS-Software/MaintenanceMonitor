@@ -3,49 +3,50 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
-</h:head>
-<h:body>
 
-	<h1>MaintenanceManager</h1>
+<ui:composition template="./templateMenu.xhtml">
 
-	<h:form>
+	<ui:define name="content">
 
-		<p:outputLabel value="Name" />
-		<br></br>
-		<p:outputLabel value="#{wartungenView.wartung.name}"/>
-		<br></br>
-		<br></br>
-		<p:outputLabel for="date" value="Datum" />
-		<br></br>
-		<p:calendar id="date" value="#{wartung.faellig}" />
-		<br></br>
-		<br></br>
+		<h:form>
 
-		<p:outputLabel for="mitarbeiter" value="Mitarbeiter" />
-		<br></br>
-		<p:inputTextarea id="mitarbeiter" rows="2" cols="25"
-			counter="display1" maxlength="50" value="#{wartung.name}"
-			counterTemplate="noch {0} freie Zeichen ..." autoResize="false"></p:inputTextarea>
-		<br></br>
-		<h:outputText id="display1" />
-		<br></br>
-		<br></br>
-		<p:outputLabel for="bemerkung" value="Bemerkung" />
-		<br></br>
-		<p:inputTextarea id="bemerkung" rows="5" cols="50" counter="display2"
-			maxlength="100" value="#{wartung.name}"
-			counterTemplate="noch {0} freie Zeichen ..." autoResize="false"></p:inputTextarea>
-		<br></br>
-		<h:outputText id="display2" />
+			<p:outputLabel value="Anlage: #{stationenView.station.anlage.name}"  />
+			<br></br>
+			<br></br>
+			<p:outputLabel value="Station/Komponente: #{stationenView.station.name}" />
+			<br></br>
+			<br></br>
+			<p:outputLabel for="date" value="Datum" />
+			<br></br>
+			<p:calendar id="date" value="#{wartung.faellig}" />
+			<br></br>
+			<br></br>
 
-		<br></br>
-		<br></br>
+			<p:outputLabel for="mitarbeiter" value="Mitarbeiter" />
+			<br></br>
+			<p:inputTextarea id="mitarbeiter" rows="2" cols="25"
+				counter="display1" maxlength="50" value="#{wartung.mitarbeiter}"
+				counterTemplate="noch {0} freie Zeichen ..." autoResize="false"></p:inputTextarea>
+			<br></br>
+			<h:outputText id="display1" />
+			<br></br>
+			<br></br>
+			<p:outputLabel for="bemerkung" value="Bemerkung" />
+			<br></br>
+			<p:inputTextarea id="bemerkung" rows="5" cols="50" counter="display2"
+				maxlength="100" value="#{wartung.info}"
+				counterTemplate="noch {0} freie Zeichen ..." autoResize="false"></p:inputTextarea>
+			<br></br>
+			<h:outputText id="display2" />
 
-		<p:commandButton value="Speichern" />
-		<p:commandButton value="Abbrechen" />
+			<br></br>
+			<br></br>
 
-	</h:form>
+			<p:commandButton value="Speichern" />
+			<p:commandButton value="Abbrechen" />
 
-</h:body>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
 </html>
