@@ -3,60 +3,48 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+
+	<h1>MaintenanceManager</h1>
+
+	<h:form>
+
+		<p:dataTable var="station" value="#{stationenView.stationen}"
+			style="font-size:12px;">
+
+			<p:column headerText="Anlage">
+				<h:outputText value="#{station.anlage.name}" />
+			</p:column>
+
+			<p:column headerText="Station">
+				<h:outputText value="#{station.name}" />
+			</p:column>
 
 
-<ui:composition template="./templateMenu.xhtml">
-
-	<ui:define name="content">
-
-		<h:form>
-
-			<p:outputLabel
-				value="Wartungen: TPM - Totally Productivity Management" />
-			<br></br>
-			<br></br>
-
-			<p:dataTable var="station" value="#{stationenView.stationen}"
-				style="font-size:12px;">
-
-				<f:facet name="header">
-           			Übersicht
-     		   </f:facet>
-
-				<p:column headerText="Anlage">
-					<h:outputText value="#{station.anlage.name}" />
-				</p:column>
-
-				<p:column headerText="Station/Komponente">
-					<h:outputText value="#{station.name}" />
-				</p:column>
-
-				<!-- 
-				<p:column headerText="rückmelden">
-					<h:commandButton action="#{stationenView.select}">
-						<f:event type="preRenderView" listener="#{stationenView.countUp}" />
-						<f:setPropertyActionListener value="#{station}"
-							target="#{stationenView.station}" />
-					</h:commandButton>
-				</p:column>
- -->
-				<p:column headerText="Wartung durchführen">
-					<p:commandButton action="tpmWartung?faces-redirect=true"
-						icon="ui-icon-edit">
-						<f:event type="preRenderView" listener="#{stationenView.countUp}" />
-						<f:setPropertyActionListener value="#{station}"
-							target="#{stationenView.station}" />
-					</p:commandButton>
-				</p:column>
+			<p:column headerText="rückmelden">
+				<h:commandButton action="#{stationenView.select}">
+					<f:event type="preRenderView" listener="#{stationenView.countUp}" />
+					<f:setPropertyActionListener value="#{station}"
+						target="#{stationenView.station}" />
+				</h:commandButton>
+			</p:column>
+			<!--  
+			<p:column headerText="Wartung durchführen">
+				<p:commandButton action="tpmWartung?faces-redirect=true"
+					icon="ui-icon-edit">
+					<f:event type="preRenderView" listener="#{stationenView.countUp}" />
+					<f:setPropertyActionListener value="#{station}"
+						target="#{stationenView.station}" />
+				</p:commandButton>
+			</p:column>
+-->
 
 
+		</p:dataTable>
 
-			</p:dataTable>
+	</h:form>
 
-		</h:form>
-
-	</ui:define>
-
-</ui:composition>
-
+</h:body>
 </html>
