@@ -16,34 +16,34 @@
 			<p:outputLabel value="Station/Komponente: #{stationenView.station.name}" />
 			<br></br>
 			<br></br>
-			<p:outputLabel for="date" value="Datum" />
+			<p:outputLabel for="date" value="Datum" style="font-size:12px;" />
 			<br></br>
-			<p:calendar id="date" value="#{wartung.faellig}" />
+			<p:calendar id="date" value="#{wartung.faellig}" style="font-size:12px;" />
 			<br></br>
 			<br></br>
 
-			<p:outputLabel for="mitarbeiter" value="Mitarbeiter" />
+			<p:outputLabel for="mitarbeiter" value="Mitarbeiter" style="font-size:12px;" />
 			<br></br>
 			<p:inputTextarea id="mitarbeiter" rows="2" cols="25"
 				counter="display1" maxlength="50" value="#{wartung.mitarbeiter}"
-				counterTemplate="noch {0} freie Zeichen ..." autoResize="false"></p:inputTextarea>
+				counterTemplate="noch {0} freie Zeichen ..." autoResize="false" style="font-size:12px;"></p:inputTextarea>
 			<br></br>
 			<h:outputText id="display1" />
 			<br></br>
 			<br></br>
-			<p:outputLabel for="bemerkung" value="Bemerkung" />
+			<p:outputLabel for="bemerkung" value="Bemerkung" style="font-size:12px;" />
 			<br></br>
 			<p:inputTextarea id="bemerkung" rows="5" cols="50" counter="display2"
 				maxlength="100" value="#{wartung.info}"
-				counterTemplate="noch {0} freie Zeichen ..." autoResize="false"></p:inputTextarea>
+				counterTemplate="noch {0} freie Zeichen ..." autoResize="false" style="font-size:12px;"></p:inputTextarea>
 			<br></br>
 			<h:outputText id="display2" />
 
 			<br></br>
 			<br></br>
 
-			<p:commandButton value="Speichern" />
-			<p:commandButton value="Abbrechen" />
+			<p:commandButton value="Speichern" style="font-size:12px;" />
+			<p:commandButton value="Abbrechen" style="font-size:12px;" />
 
 		</h:form>
 	</ui:define>
