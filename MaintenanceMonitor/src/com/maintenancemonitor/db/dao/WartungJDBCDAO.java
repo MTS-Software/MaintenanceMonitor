@@ -23,7 +23,7 @@ public class WartungJDBCDAO implements WartungDAO {
 	private final static String GET_STATIONEN_WARTUNGEN = "SELECT * FROM wartung WHERE station_id IS NOT NULL ORDER BY faellig DESC";
 	private final static String GET_WARTUNG = "SELECT * FROM wartung where id = ?";
 	private final static String GET_ALL_WARTUNGEN = "SELECT * FROM wartung";
-	private final static String INSERT_WARTUNG = "INSERT INTO wartung(auftragNr, faellig, mitarbeiter, info, anlage_id, station_id, timestamp, user) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private final static String INSERT_WARTUNG = "INSERT INTO wartung(faellig, mitarbeiter, info, anlage_id, station_id, timestamp, user) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private final static String UPDATE_WARTUNG = "UPDATE wartung SET auftragNr = ?, faellig = ?, prozent = ?, mitarbeiter = ?, info = ?, timestamp = ?, user = ? WHERE id = ?";
 	private final static String DELETE_WARTUNG = "DELETE FROM wartung WHERE id= ?";
 
@@ -65,7 +65,7 @@ public class WartungJDBCDAO implements WartungDAO {
 				wartung.setId(new Integer(rs.getInt("id")));
 				wartung.setAuftragNr(rs.getString("auftragNr"));
 				wartung.setFaellig(rs.getDate("faellig"));
-			
+
 				// 03.11.2016
 				// Beim Audit wurden hohe Prozentzahlen bemängelt, somit werden
 				// alle über 110% manipuliert,
@@ -107,7 +107,7 @@ public class WartungJDBCDAO implements WartungDAO {
 				wartung.setId(rs.getInt("id"));
 				wartung.setAuftragNr(rs.getString("auftragNr"));
 				wartung.setFaellig(rs.getDate("faellig"));
-			
+
 				// 03.11.2016
 				// Beim Audit wurden hohe Prozentzahlen bemängelt, somit werden
 				// alle über 110% manipuliert,
@@ -149,7 +149,7 @@ public class WartungJDBCDAO implements WartungDAO {
 				wartung.setId(rs.getInt("id"));
 				wartung.setAuftragNr(rs.getString("auftragNr"));
 				wartung.setFaellig(rs.getDate("faellig"));
-			
+
 				// 03.11.2016
 				// Beim Audit wurden hohe Prozentzahlen bemängelt, somit werden
 				// alle über 110% manipuliert,
@@ -227,24 +227,18 @@ public class WartungJDBCDAO implements WartungDAO {
 		try {
 			ps = ConnectionManager.getInstance().getConnection().prepareStatement(INSERT_WARTUNG);
 
-			ps.setString(1, wartung.getAuftragNr());
-			ps.setDate(2, wartung.getFaellig());
-			ps.setString(3, wartung.getMitarbeiter());
-			ps.setString(4, wartung.getInfo());
-			if (wartung.getAnlageId() == 0) {
-				ps.setNull(5, wartung.getAnlageId());
-				ps.setInt(6, wartung.getStationId());
-			}
-			if (wartung.getStationId() == 0) {
-				ps.setInt(5, wartung.getAnlageId());
-				ps.setNull(6, wartung.getStationId());
-			}
-			wartung.setTimestamp(new Timestamp(System.currentTimeMillis() / 1000 * 1000));
-			ps.setTimestamp(7, wartung.getTimestamp());
-			ps.setString(8, System.getProperty("user.name"));
-			ps.executeUpdate();
+			java.sql.Date d = new java.sql.Date(wartung.getFaellig().getTime());
+			ps.setDate(1, d);
+			ps.setString(2, wartung.getMitarbeiter());
+			ps.setString(3, wartung.getInfo());
 
-			wartung.setId(selectLastID());
+			ps.setNull(4, 0);
+			ps.setInt(5, wartung.getStationId());
+
+			wartung.setTimestamp(new Timestamp(System.currentTimeMillis() / 1000 * 1000));
+			ps.setTimestamp(6, wartung.getTimestamp());
+			ps.setString(7, System.getProperty("user.name"));
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -286,8 +280,10 @@ public class WartungJDBCDAO implements WartungDAO {
 				PreparedStatement ps = ConnectionManager.getInstance().getConnection().prepareStatement(UPDATE_WARTUNG);
 
 				ps.setString(1, wartung.getAuftragNr());
-				ps.setDate(2, wartung.getFaellig());
-			
+
+				java.sql.Date d = new java.sql.Date(wartung.getFaellig().getTime());
+				ps.setDate(2, d);
+
 				ps.setInt(4, wartung.getProzent());
 				ps.setString(5, wartung.getMitarbeiter());
 				ps.setString(6, wartung.getInfo());
@@ -329,7 +325,7 @@ public class WartungJDBCDAO implements WartungDAO {
 				wartung.setId(new Integer(rs.getInt("id")));
 				wartung.setAuftragNr(rs.getString("auftragNr"));
 				wartung.setFaellig(rs.getDate("faellig"));
-			
+
 				// 03.11.2016
 				// Beim Audit wurden hohe Prozentzahlen bemängelt, somit werden
 				// alle über 110% manipuliert,
@@ -373,7 +369,7 @@ public class WartungJDBCDAO implements WartungDAO {
 				wartung.setId(new Integer(rs.getInt("id")));
 				wartung.setAuftragNr(rs.getString("auftragNr"));
 				wartung.setFaellig(rs.getDate("faellig"));
-			
+
 				// 03.11.2016
 				// Beim Audit wurden hohe Prozentzahlen bemängelt, somit werden
 				// alle über 110% manipuliert,

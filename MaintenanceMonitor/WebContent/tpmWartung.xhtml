@@ -47,7 +47,19 @@
 		<br></br>
 		<br></br>
 
-		<p:commandButton value="Speichern" />
+		<h:commandButton value="Speichern" action="#{stationenView.save}">
+			<f:event type="preRenderView" listener="#{stationenView.countUp}" />
+			<f:setPropertyActionListener value="#{wartung}"
+				target="#{stationenView.wartung}" />
+		</h:commandButton>
+
+		<h:commandButton value="Speichern"
+			actionListener="#{stationenView.save}" style="font-size:12px;"
+			update="tbl" />
+
+		<h:messages styleClass="errorMessage" />
+
+
 		<p:commandButton value="Abbrechen" />
 
 	</h:form>

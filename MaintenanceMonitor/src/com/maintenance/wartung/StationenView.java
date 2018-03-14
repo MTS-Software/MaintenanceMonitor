@@ -8,24 +8,28 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 import com.maintenance.util.ProzentCalc;
 import com.maintenancemonitor.db.dao.AnlageJDBCDAO;
 import com.maintenancemonitor.db.dao.StationJDBCDAO;
+import com.maintenancemonitor.db.dao.WartungDAO;
+import com.maintenancemonitor.db.dao.WartungJDBCDAO;
 import com.maintenancemonitor.db.dto.AnlageDTO;
 import com.maintenancemonitor.db.dto.StationDTO;
+import com.maintenancemonitor.db.dto.WartungDTO;
 import com.maintenancemonitor.db.dto.WartungDTO.EWartungArt;
 import com.maintenancemonitor.util.DAOException;
 
 @ManagedBean(name = "stationenView")
-@SessionScoped
+@RequestScoped
 public class StationenView {
 
 	private int count;
 
-	
 	private List<StationDTO> stationen;
+	private WartungDTO wartung;
 
 	@ManagedProperty(value = "#{station}")
 	private StationDTO station;
@@ -90,11 +94,39 @@ public class StationenView {
 		this.station = station;
 	}
 
+	public WartungDTO getWartung() {
+		return wartung;
+	}
+
+	public void setWartung(WartungDTO wartung) {
+		this.wartung = wartung;
+	}
+
 	public void countUp() {
 
 		count++;
 
 		System.out.println(count);
+	}
+
+	public String save() {
+
+		try {
+			WartungDAO wartungDAO = new WartungJDBCDAO();
+			wartung.setStationId(station.getId());
+
+			System.out.println("Wartung speichern");
+			System.out.println("Datum: " + wartung.getFaellig());
+			System.out.println("Mitarbeiter: " + wartung.getMitarbeiter());
+			System.out.println("Info: " + wartung.getInfo());
+
+			wartungDAO.insertWartung(wartung);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "tpmWartungen";
 	}
 
 	private boolean checkStationElapsed(StationDTO station) {
