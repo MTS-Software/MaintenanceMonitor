@@ -24,6 +24,7 @@ public class StationenView {
 
 	private int count;
 
+	
 	private List<StationDTO> stationen;
 
 	@ManagedProperty(value = "#{station}")
