@@ -9,7 +9,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 
 import com.maintenance.util.ProzentCalc;
 import com.maintenancemonitor.db.dao.AnlageJDBCDAO;
@@ -119,6 +118,7 @@ public class StationenView {
 			System.out.println("Datum: " + wartung.getFaellig());
 			System.out.println("Mitarbeiter: " + wartung.getMitarbeiter());
 			System.out.println("Info: " + wartung.getInfo());
+			System.out.println("StationId: " + wartung.getStationId());
 
 			wartungDAO.insertWartung(wartung);
 		} catch (DAOException e) {
