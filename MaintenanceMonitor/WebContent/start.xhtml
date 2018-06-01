@@ -20,26 +20,42 @@
 <ui:composition template="./templateMenu.xhtml">
 
 	<ui:define name="content">
-
 		<img src="images/pfcurve.jpg" width="500" height="300" alt="Grafik"></img>
+		<img src="images/chart1.jpg" width="600" height="300" alt="Grafik"></img>
 
 		<br />
 		<br />
 		<a href="http://10.176.45.4/software/MaintenanceManager.jar"><font
-			size="4">MaintenanceManager</font></a>
+			size="4">MaintenanceManager </font></a>
+		<br />
+		<h:outputLabel value="Wartungsmanager für Anlagen" />
 		<br />
 		<br />
-
 		<a href="http://10.176.45.4/software/InspectionManager.jar"><font
 			size="4">InspectionManager</font></a>
 		<br />
-		<br />
-		<a href="http://10.176.45.4/software/TrainingManager.jar"><font
-			size="4">TrainingManager</font></a>
+		<h:outputLabel
+			value="Wartungsmanager für wiederkehrende Überprüfungen" />
 		<br />
 		<br />
 		<a href="http://10.176.45.4/software/LagerManager.jar"><font
-			size="4">LagerManager</font></a>
+			size="4">LagerManager </font></a>
+		<br />
+		<h:outputLabel
+			value="Lagerverwaltung für ausgebaute und zwischengelagerte Teile" />
+		<br />
+		<br />
+		<a href="http://10.176.45.4/software/TrainingManager.jar"><font
+			size="4">TrainingManager </font></a>
+		<br />
+		<h:outputLabel value="Schulungsdatenbank" />
+		<br />
+		<br />
+		<a href="http://10.176.45.4/software/TPMTool.jar"><font size="4">TPMTool
+		</font></a>
+		<br />
+		<h:outputLabel value="autonomes Rückmelden von TPM-Wartungen" />
+		<br />
 		<br />
 
 	</ui:define>
